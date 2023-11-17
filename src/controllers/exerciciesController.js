@@ -27,7 +27,7 @@ class ExerciciesController{
     static async exercicieCreate (req, res) {
         const workoutMap = req.body
         try{
-            const setWorkout = await workout.findById(workoutMap.workouts)
+            const setWorkout = await workout.findById(workoutMap.workoutId)
             const createExercicie = {...workoutMap, workouts:{...setWorkout._doc}}
             const insertExercicie = await exercicies.create(createExercicie)
             res.status(201).json({ message: `Exercicie create sucefull`})
@@ -54,6 +54,16 @@ class ExerciciesController{
         try{
             const deleteExercicie = await exercicies.findOneAndDelete(exercicieId)
             res.status(201).json({ message: `Exercicie delete sucefull`})
+        }catch (erro){
+            res.status(500).json({ message: `${erro.message} - Falha na requisição` })
+        }
+    }
+
+    static async exercicieListenByWorkout (req, res) {
+        try{
+            const parameter = req.query.workoutId
+            const listenExercicie = await exercicies.find({workoutId: parameter})
+            res.status(200).json(listenExercicie)
         }catch (erro){
             res.status(500).json({ message: `${erro.message} - Falha na requisição` })
         }

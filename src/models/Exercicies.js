@@ -8,6 +8,7 @@ const exercicietSchema = new mongoose.Schema({
     maxRepetition: { type: Number, required: true },
     minRepetition: { type: Number, required: true },
     observation: { type: String },
+    workoutId: { type: mongoose.Schema.Types.ObjectId, ref: "autores", required: true },
     workouts: workoutSchema
 }, { versionKey: false })
 
