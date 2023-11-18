@@ -1,3 +1,4 @@
+import exercicies from "../models/Exercicies.js"
 import {workout} from "../models/Workout.js"
 
 class WorkoutController{
@@ -50,6 +51,7 @@ class WorkoutController{
         const workoutId = await workout.findById(req.params.id)
         try{
             const deleteWorkout = await workout.findOneAndDelete(workoutId)
+            const deleteExercicies = await exercicies.deleteMany({ workoutId: workoutId })
             res.status(201).json({ message: `Workout delete sucefull`})
         }catch (erro){
             res.status(500).json({ message: `${erro.message} - Falha na requisição` })
